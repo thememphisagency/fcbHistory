@@ -21,7 +21,7 @@
 <ft:objectAdmin
 	title="Logs" 
 	typename="fcbLog" 
-	plugin="fcbPostOffice"
+	plugin="fcbHistory"
 	ColumnList="label,reference,datetimecreated"
 	SortableColumns="label,reference,datetimecreated"
 	lFilterFields="label,reference"
