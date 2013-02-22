@@ -13,29 +13,29 @@
 			stData.foo = 'bar';
 
 			stDefault = {};
+			stDefault.level = 'info';
 			stDefault.reference = 'LogTest';
-			stDefault.title = 'EmailTestCase';
-			stDefault.data = SerializeJSON(stData);
+			stDefault.message = 'EmailTestCase';
+			stDefault.metadata = SerializeJSON(stData);
 		</cfscript>
 
 	</cffunction>
-
-	<!--- cffunction name="tearDown" returntype="void" access="public">
-		<!--- Any code needed to return your environment to normal goes here --->
-	</cffunction --->
 
 	<cffunction name="should_create_log_within_database" returntype="void" access="public">
 
 		<cfset var stLog = createTemporaryObject(
 				typename = 'fcbLog',
+				level = stDefault.level,
+				message = stDefault.message,
 				reference = stDefault.reference,
-				title = stDefault.title,
-				data = stDefault.data
+				metadata = stDefault.metadata
 			) />
 
 		<cfset assertContentTypeExists(typename = 'fcbLog') />
 		<cfset assertObjectExists(typename = 'fcbLog', objectid = stLog.objectid) />
-		<cfset assertEquals('Log created by LogTest', stLog.title) />
+		<cfset assertEquals(stDefault.level, stLog.level) />
+		<cfset assertEquals(stDefault.reference, stLog.reference) />
+		<cfset assertEquals(stDefault.message, stLog.message) />
 
 	</cffunction>
 	
