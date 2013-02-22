@@ -1,5 +1,7 @@
 <cfcomponent extends="farcry.plugins.testmxunit.tests.FarcryTestCase">
 
+	<cfimport path="farcry.plugins.fcbhistory.packages.types.history" />
+
 	<!--- setup and teardown --->
 	<cffunction name="setUp" returntype="void" access="public">
 
@@ -36,6 +38,31 @@
 		<cfset assertEquals(stDefault.level, stLog.level) />
 		<cfset assertEquals(stDefault.reference, stLog.reference) />
 		<cfset assertEquals(stDefault.message, stLog.message) />
+
+	</cffunction>
+
+	<cffunction name="should_throw_on_missing_parameters" returntype="void" access="public" mxunit:expectedException="Application">
+		
+		<cfset oHistory = new history() />
+		
+		<cfset assertTrue(oHistory.log()) />
+
+	</cffunction>
+
+	<cffunction name="create_a_log_by_a_default_level_accessor" returntype="void" access="public">
+
+		<cfset oHistory = new history() />
+
+		<cfset assertTrue(oHistory.info('This is my info')) />
+
+	</cffunction>
+
+	<cffunction name="create_a_log_by_a_custom_level_accessor" returntype="void" access="public">
+
+		<cfset oHistory = new history() />
+		<cfset oHistory.setLevels('customLevel') />
+
+		<cfset assertTrue(oHistory.customLevel('This is my info')) />
 
 	</cffunction>
 	
