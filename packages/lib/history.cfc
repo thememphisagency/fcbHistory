@@ -87,7 +87,6 @@
 		<!--- pass the log to each transport --->
 		<cfloop collection="#this.transports#" item="transport">
 			<cfset logString = this.transports[transport].log(level, message, reference, metadata) />
-			<cfdump var="#logString#" />
 		</cfloop>
 
 		<cfreturn this />
