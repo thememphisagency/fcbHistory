@@ -26,7 +26,7 @@
 
 		<!--- generate the timestamp, unless false
 		append ' [2013-01-01 00:00:00]' to read 'info [2013-01-01 00:00:00]' --->
-		<cfif isBoolean(this.timestamp) || this.timestamp EQ this.getTimestamp || isCustomFunction(this.timestamp)>
+		<cfif isBoolean(this.timestamp) AND this.timestamp EQ true || this.timestamp EQ this.getTimestamp || isCustomFunction(this.timestamp)>
 			<cfset sReturn = sReturn & ' [' & this.timestamp() & ']' />
 		</cfif>
 
