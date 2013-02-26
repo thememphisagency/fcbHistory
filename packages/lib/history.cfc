@@ -5,11 +5,32 @@
 
 	<cffunction name="init" returntype="history">
 
+		<cfargument name="transports" type="array" required="false" />
+		<cfargument name="levels" type="array" required="false" default="#['info','warning','error']#" />
+
+		<!--- have we been supplied an array of transports? --->
+		<cfif isDefined('arguments.transports') AND isValid("array", arguments.transports)>
+
+			<cfloop array="#arguments.transports#" index="transport">
+				
+				<cfif NOT isDefined('transport.transport')>
+					<cfthrow type="Application" message="Each transport should passed to the init method should provide a transport property containing a path to the transport class." />
+				</cfif>
+
+				<!--- set an empty options struct if nothing was passed in, just allows us to easily reference it --->
+				<cfparam name="transport.options" default="#structNew()#" />
+
+				<cfset attachTransport(transport.transport, transport.options) />
+
+			</cfloop>
+
 		<!--- init the default transport --->
-		<cfset attachTransport('farcry.plugins.fcbhistory.packages.lib.transport', {}) />
+		<cfelse>
+			<cfset attachTransport('farcry.plugins.fcbhistory.packages.lib.transport', {}) />
+		</cfif>
 
 		<!--- init the default levels --->
-		<cfset setLevels('info','warning','error') />
+		<cfset setLevels(arguments.levels) />
 
 		<cfreturn this />
 
@@ -17,13 +38,13 @@
 
 	<cffunction name="setLevels" returntype="void">
 		
-		<cfargument name="levels" type="string" required="true" />
+		<cfargument name="levels" type="array" required="true" />
 
 		<!--- remove the old level accessors --->
 		<!--- not sure how to do this, just yet --->
 
 		<!--- store in variables.levels --->
-		<cfset variables.levels = ListToArray(arguments.levels) />
+		<cfset variables.levels = arguments.levels />
 
 		<!--- create proxy methods for dot access i.e. history.info() --->
 		<cfloop array="#variables.levels#" index="level">
