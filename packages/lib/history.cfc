@@ -13,6 +13,7 @@
 
 			<cfloop array="#arguments.transports#" index="transport">
 				
+				<!--- each transport (struct) in the transports array must define the path to the transport class, in a property named transport --->
 				<cfif NOT isDefined('transport.transport')>
 					<cfthrow type="Application" message="Each transport should passed to the init method should provide a transport property containing a path to the transport class." />
 				</cfif>
@@ -20,6 +21,7 @@
 				<!--- set an empty options struct if nothing was passed in, just allows us to easily reference it --->
 				<cfparam name="transport.options" default="#structNew()#" />
 
+				<!--- attach the transport --->
 				<cfset attachTransport(transport.transport, transport.options) />
 
 			</cfloop>
@@ -29,14 +31,14 @@
 			<cfset attachTransport('farcry.plugins.fcbhistory.packages.lib.transport', {}) />
 		</cfif>
 
-		<!--- init the default levels --->
+		<!--- init the levels (default as per the argument, or custom as passed through to init) --->
 		<cfset setLevels(arguments.levels) />
 
 		<cfreturn this />
 
 	</cffunction>
 
-	<cffunction name="setLevels" returntype="void">
+	<cffunction name="setLevels" returntype="void" hint="Set the levels used by the logger.">
 		
 		<cfargument name="levels" type="array" required="true" />
 
@@ -53,7 +55,7 @@
 
 	</cffunction>
 
-	<cffunction name="attachTransport" returntype="history">
+	<cffunction name="attachTransport" returntype="history" hint="Used to attach a new transport to the logger (loggers can handle multiple transports)">
 
 		<cfargument name="transportPath" type="string" required="true" hint="The dot path to the transport component." />
 		<cfargument name="options" type="struct" required="false" default="#structNew()#" hint="The options to pass to the transport." />
@@ -96,7 +98,7 @@
 
 	</cffunction>
 
-	<cffunction name="log" returntype="history">
+	<cffunction name="log" returntype="history" hint="Used to log a message with the logger. You can also log using the level-named methods i.e. logger.info('message').">
 		
 		<cfargument name="level" type="string" required="true" />
 		<cfargument name="message" type="string" required="true" />
