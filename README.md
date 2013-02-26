@@ -29,6 +29,22 @@ Basic usage
 	<!--- log something! --->
 	<cfset logger.log('info', 'message') />
 
+Or alternatively, you can pass in a transport directly to init:
+
+	<cfset oHistory = CreateObject('component', 'farcry.plugins.fcbhistory.packages.lib.history').init(
+		transports = [
+			{
+				transport: 'farcry.plugins.fcbhistory.packages.lib.fileTransport',
+				options: {
+					file: '#ExpandPath('./')#output.log'
+				}
+			}
+		]
+	) />
+
+	<!--- start logging! --->
+	<cfset logger.warning('warning message') />
+
 ### Levels
 
 The default levels are:
