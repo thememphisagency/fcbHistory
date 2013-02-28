@@ -59,7 +59,7 @@
 	<cffunction name="create_a_log_by_a_custom_level_accessor" returntype="void" access="public">
 
 		<cfset var oHistory = new history() />
-		<cfset oHistory.setLevels('customLevel') />
+		<cfset oHistory.setLevels(['customLevel']) />
 
 		<cfset assertEquals(oHistory, oHistory.customLevel('This is my info')) />
 
