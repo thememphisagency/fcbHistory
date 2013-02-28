@@ -88,7 +88,7 @@
 
 	</cffunction>
 
-	<cffunction name="logProxy" returntype="any" access="package">
+	<cffunction name="logProxy" returntype="any">
 
 		<cfargument name="message" type="string" required="true" />
 		<cfargument name="reference" type="string" required="false" default="" />
