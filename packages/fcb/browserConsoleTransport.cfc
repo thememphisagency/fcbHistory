@@ -1,9 +1,9 @@
 <cfcomponent output="true" extends="transport" displayname="fcbHistory base transport" hint="Base transport that all other transports should inherit from.">
 
-	<cfset this.name = 'consoleTransport' />
+	<cfset this.name = 'browserConsoleTransport' />
 	<cfset this.timestamp = this.getTimestamp />
 
-	<cffunction name="init" returntype="consoleTransport">
+	<cffunction name="init" returntype="browserConsoleTransport">
 
 		<cfset super.init(argumentCollection=arguments) />
 
